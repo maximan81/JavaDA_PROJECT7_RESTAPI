@@ -8,6 +8,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 
+/**
+ * The RuleName class implements a ruleName
+ * entity.
+ */
 @Data
 @Entity
 @Table(name = "rulename")

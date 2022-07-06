@@ -8,6 +8,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 
+/**
+ * The Trade class implements a trade
+ * entity.
+ */
 @Data
 @Entity
 @Table(name = "trade")

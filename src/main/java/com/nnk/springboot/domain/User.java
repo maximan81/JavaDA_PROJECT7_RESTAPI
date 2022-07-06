@@ -7,6 +7,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+/**
+ * The User class implements a users
+ * entity.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

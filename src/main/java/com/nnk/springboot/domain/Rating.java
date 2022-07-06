@@ -9,6 +9,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
+/**
+ * The Rating class implements a rating
+ * entity.
+ */
 @Data
 @Entity
 @Table(name = "rating")

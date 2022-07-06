@@ -11,19 +11,23 @@ import javax.validation.constraints.NotBlank;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+/**
+ * The BidList class implements a bidList
+ * entity.
+ */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "bidlist")
 public class BidList {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer BidListId;
+  private Integer bidListId;
 
   private String account;
 
   private String type;
-
   private Double bidQuantity;
 
   private Double askQuantity;
@@ -50,12 +54,6 @@ public class BidList {
 
   private Timestamp creationDate;
 
-  public BidList(String account, String type, Double bidQuantity) {
-    this.account = account;
-    this.type = type;
-    this.bidQuantity = bidQuantity;
-  }
-
   private String revisionName;
 
   private Timestamp revisionDate;
@@ -68,4 +66,16 @@ public class BidList {
 
   private String side;
 
+  public BidList(String account, String type, Double bidQuantity) {
+    this.account = account;
+    this.type = type;
+    this.bidQuantity = bidQuantity;
+  }
+
+  public BidList(Integer bidListId, String account, String type, Double bidQuantity) {
+    this.bidListId = bidListId;
+    this.account = account;
+    this.type = type;
+    this.bidQuantity = bidQuantity;
+  }
 }
