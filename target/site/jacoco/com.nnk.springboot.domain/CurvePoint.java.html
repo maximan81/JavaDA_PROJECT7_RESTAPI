@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CurvePoint.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.domain</a> &gt; <span class="el_source">CurvePoint.java</span></div><h1>CurvePoint.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.domain;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
+
+import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import java.sql.Timestamp;
+
+/**
+ * The CurvePoint class implements a curvepoint
+ * entity.
+ */
+<span class="pc bpc" id="L20" title="53 of 54 branches missed.">@Data</span>
+<span class="fc" id="L21">@NoArgsConstructor</span>
+<span class="nc" id="L22">@AllArgsConstructor</span>
+@Entity
+@Table(name = &quot;curvepoint&quot;)
+public class CurvePoint {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+<span class="fc" id="L28">  private Integer id;</span>
+
+  @NotNull
+<span class="fc" id="L31">  private Integer curveId;</span>
+
+<span class="fc" id="L33">  private Timestamp asOfDate;</span>
+
+  @Column(columnDefinition=&quot;Decimal(10,2) default '0.00'&quot;)
+  @NotNull
+<span class="fc" id="L37">  private Double term;</span>
+
+  @Column(columnDefinition=&quot;Decimal(10,2) default '0.00'&quot;)
+  @NotNull
+<span class="fc" id="L41">  private Double value;</span>
+
+<span class="fc" id="L43">  private Timestamp creationDate;</span>
+
+<span class="fc" id="L45">  public CurvePoint(Integer curveId, Double term, Double value) {</span>
+<span class="fc" id="L46">    this.curveId = curveId;</span>
+<span class="fc" id="L47">    this.term = term;</span>
+<span class="fc" id="L48">    this.value = value;</span>
+<span class="fc" id="L49">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

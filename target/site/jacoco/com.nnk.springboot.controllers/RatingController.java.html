@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RatingController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.controllers</a> &gt; <span class="el_source">RatingController.java</span></div><h1>RatingController.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.controllers;
+
+import com.nnk.springboot.domain.CurvePoint;
+import com.nnk.springboot.domain.Rating;
+import com.nnk.springboot.service.RatingService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
+import java.util.Optional;
+
+/**
+ * RatingController. class that manage
+ * request/response logic of rating.
+ */
+@Controller
+public class RatingController {
+
+<span class="fc" id="L26">    private static final Logger log = LoggerFactory.getLogger(CurveController.class);</span>
+    private final RatingService ratingService;
+
+<span class="fc" id="L29">    public RatingController(RatingService ratingService) {</span>
+<span class="fc" id="L30">        this.ratingService = ratingService;</span>
+<span class="fc" id="L31">    }</span>
+
+    /**
+     * home. Method that display a rating home page.
+     *
+     * @param model a model
+     * @return rating/list view
+     */
+    @RequestMapping(&quot;/rating/list&quot;)
+    public String home(Model model)
+    {
+<span class="fc" id="L42">        Iterable&lt;Rating&gt; ratings = ratingService.getRatings();</span>
+
+<span class="fc" id="L44">        model.addAttribute(&quot;ratings&quot;, ratings);</span>
+
+<span class="fc" id="L46">        log.info(&quot;Request GET for displaying rating/list page &quot;</span>
+                + &quot; SUCCESS(200 OK)&quot;);
+
+<span class="fc" id="L49">        return &quot;rating/list&quot;;</span>
+    }
+
+    /**
+     * addRatingForm. Method that display an add rating form page.
+     *
+     * @param model a model
+     * @param rating a rating
+     * @return rating/add view
+     */
+    @GetMapping(&quot;/rating/add&quot;)
+    public String addRatingForm(Model model, Rating rating) {
+
+<span class="fc" id="L62">        model.addAttribute(&quot;rating&quot;, rating);</span>
+
+<span class="fc" id="L64">        log.info(&quot;Request GET for displaying rating/add page &quot;</span>
+                + &quot; SUCCESS(200 OK)&quot;);
+
+<span class="fc" id="L67">        return &quot;rating/add&quot;;</span>
+    }
+
+    /**
+     * validate. Method that validate an add rating form
+     * and perform post request for adding new rating.
+     *
+     * @param rating a rating
+     * @param result a BindingResult
+     * @return rating/list view
+     */
+    @PostMapping(&quot;/rating/validate&quot;)
+    public String validate(@Valid Rating rating, BindingResult result, Model model) {
+
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (result.hasErrors()){</span>
+
+<span class="fc" id="L83">            log.error(&quot;Request POST for validation of rating/add form, {}&quot;,</span>
+                    result);
+
+<span class="fc" id="L86">            return &quot;rating/add&quot;;</span>
+        }
+
+<span class="fc" id="L89">        ratingService.saveRating(rating);</span>
+
+<span class="fc" id="L91">        log.info(&quot;Request POST for successful rating/add&quot;</span>
+                + &quot; SUCCESS(200 OK)&quot;);
+
+<span class="fc" id="L94">        return &quot;redirect:/rating/list&quot;;</span>
+    }
+
+    /**
+     * showUpdateForm. Method that display update rating page.
+     *
+     * @param id a rating id
+     * @param model a model
+     * @return rating/update view
+     */
+    @GetMapping(&quot;/rating/update/{id}&quot;)
+    public String showUpdateForm(@PathVariable(&quot;id&quot;) Integer id, Model model) {
+<span class="fc" id="L106">        Optional&lt;Rating&gt; rating = ratingService.getRating(id);</span>
+
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        if (rating.isEmpty()) {</span>
+
+<span class="fc" id="L110">            log.error(&quot;Error for displaying rating/update page &quot;</span>
+                    + &quot; redirection to rating list page&quot;);
+
+<span class="fc" id="L113">            return &quot;redirect:/rating/list&quot;;</span>
+        }
+
+<span class="fc" id="L116">        model.addAttribute(&quot;rating&quot;, rating.get());</span>
+
+<span class="fc" id="L118">        log.info(&quot;Request GET for displaying rating/update page &quot;</span>
+                + &quot; SUCCESS(200 OK)&quot;);
+
+<span class="fc" id="L121">        return &quot;rating/update&quot;;</span>
+    }
+
+    /**
+     * updateRating. Method that validate an add rating form
+     * and perform post request for updating rating.
+     *
+     * @param rating a rating
+     * @param result a BindingResult
+     * @return rating/list view
+     */
+    @PostMapping(&quot;/rating/update/{id}&quot;)
+    public String updateRating(@PathVariable(&quot;id&quot;) Integer id, @Valid Rating rating,
+                             BindingResult result, Model model) {
+
+<span class="fc bfc" id="L136" title="All 2 branches covered.">        if (result.hasErrors()) {</span>
+
+<span class="fc" id="L138">            log.error(&quot;Request POST for validation of rating/update form for rating &quot;</span>
+                            +
+                            &quot;id: {}, errors: {}&quot;,
+                    id, result);
+
+<span class="fc" id="L143">            return &quot;rating/update&quot;;</span>
+        }
+
+<span class="fc" id="L146">        ratingService.saveRating(rating);</span>
+
+<span class="fc" id="L148">        log.info(&quot;Request POST for successful rating/update&quot;</span>
+                + &quot; SUCCESS(200 OK)&quot;);
+
+<span class="fc" id="L151">        return &quot;redirect:/rating/list&quot;;</span>
+    }
+
+    /**
+     * deleteRating. Method that delete rating in database.
+     *
+     * @param id a rating id
+     * @return rating/list view
+     */
+    @GetMapping(&quot;/rating/delete/{id}&quot;)
+    public String deleteRating(@PathVariable(&quot;id&quot;) Integer id, Model model) {
+
+<span class="fc" id="L163">        Optional&lt;Rating&gt; rating = ratingService.getRating(id);</span>
+
+<span class="fc bfc" id="L165" title="All 2 branches covered.">        if (rating.isEmpty()) {</span>
+
+<span class="fc" id="L167">            log.error(&quot;Error for deleting rating&quot;</span>
+                    + &quot;redirection to rating list page&quot;);
+
+<span class="fc" id="L170">            return &quot;rating/list&quot;;</span>
+        }
+
+<span class="fc" id="L173">        ratingService.deleteRating(rating.get());</span>
+
+<span class="fc" id="L175">        log.info(&quot;Request GET for successful rating/delete&quot;</span>
+                + &quot; SUCCESS(200 OK)&quot;);
+
+<span class="fc" id="L178">        return &quot;rating/list&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
