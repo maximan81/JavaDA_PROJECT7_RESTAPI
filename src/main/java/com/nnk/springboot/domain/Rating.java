@@ -14,6 +14,8 @@ import java.sql.Timestamp;
  * entity.
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "rating")
 public class Rating {
@@ -21,11 +23,16 @@ public class Rating {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
+  @NotBlank
   private String moodysRating;
 
+  @NotBlank
   private String sandPRating;
 
+  @NotBlank
   private String fitchRating;
+
+  private Integer orderNumber;
 
   public Rating(String moodysRating, String sandPRating, String fitchRating, Integer orderNumber) {
     this.moodysRating = moodysRating;
@@ -33,8 +40,5 @@ public class Rating {
     this.fitchRating = fitchRating;
     this.orderNumber = orderNumber;
   }
-
-  private Integer orderNumber;
-
 
 }

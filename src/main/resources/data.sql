@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS CurvePoint (
 CREATE TABLE IF NOT EXISTS Rating (
   id tinyint(4) NOT NULL AUTO_INCREMENT,
   moodys_rating VARCHAR(125),
-  sand_p_rating VARCHAR(125),
+  sandprating VARCHAR(125),
   fitch_rating VARCHAR(125),
   order_number tinyint,
 

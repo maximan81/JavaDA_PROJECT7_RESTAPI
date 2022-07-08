@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 /**
@@ -13,6 +14,8 @@ import java.sql.Timestamp;
  * entity.
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "trade")
 public class Trade {
@@ -20,15 +23,12 @@ public class Trade {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer tradeId;
 
+  @NotBlank
   private String account;
-
-  public Trade(String account, String type) {
-    this.account = account;
-    this.type = type;
-  }
-
+  @NotBlank
   private String type;
 
+  @NotNull
   private Double buyQuantity;
 
   private Double sellQuantity;
@@ -65,4 +65,9 @@ public class Trade {
 
   private String side;
 
+  public Trade(String account, String type, Double buyQuantity) {
+    this.account = account;
+    this.type = type;
+    this.buyQuantity = buyQuantity;
+  }
 }

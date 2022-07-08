@@ -3,6 +3,8 @@ package com.nnk.springboot.controllers;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.dto.BidListDto;
 import com.nnk.springboot.service.BidListService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +23,7 @@ import java.util.Optional;
 @Controller
 public class BidListController {
 
+    private static final Logger log = LoggerFactory.getLogger(BidListController.class);
     private final BidListService bidListService;
 
     public BidListController(BidListService bidListService) {
@@ -28,7 +31,7 @@ public class BidListController {
     }
 
     /**
-     * home. Method that display a home page.
+     * home. Method that display a bid home page.
      *
      * @param model a model
      * @return bidList/list view
@@ -40,6 +43,9 @@ public class BidListController {
         Iterable<BidList> bidLists = bidListService.getAllBidList();
 
         model.addAttribute("bidLists", bidLists);
+
+        log.info("Request GET for displaying bidList/list page "
+                + " SUCCESS(200 OK)");
 
         return "bidList/list";
     }
@@ -54,6 +60,10 @@ public class BidListController {
     @GetMapping("/bidList/add")
     public String addBidForm(Model model, BidListDto bidListDto) {
         model.addAttribute("bidListDto", bidListDto);
+
+        log.info("Request GET for displaying bidList/add page "
+                + " SUCCESS(200 OK)");
+
         return "bidList/add";
     }
 
@@ -68,10 +78,17 @@ public class BidListController {
     @PostMapping("/bidList/validate")
     public String validate(@Valid BidListDto bidListDto, BindingResult result) {
         if (result.hasErrors()) {
+
+            log.error("Request POST for validation of bidList/add form, {}",
+                    result);
+
             return "bidList/add";
         }
 
         bidListService.saveBidList(bidListDto);
+
+        log.info("Request POST for successful bidList/add"
+                + " SUCCESS(200 OK)");
 
         return "redirect:/bidList/list";
     }
@@ -88,6 +105,10 @@ public class BidListController {
         Optional<BidList> bidList = bidListService.getOneBidList(id);
 
         if (bidList.isEmpty()) {
+
+            log.error("Error for displaying bidList/update page "
+                    + " redirection to bidList list page");
+
             return "redirect:/bidList/list";
         }
 
@@ -97,6 +118,9 @@ public class BidListController {
                 bidList.get().getType(),
                 bidList.get().getBidQuantity())
         );
+
+        log.info("Request GET for displaying bidList/update page "
+                + " SUCCESS(200 OK)");
 
         return "bidList/update";
     }
@@ -115,10 +139,19 @@ public class BidListController {
 
 
         if (result.hasErrors()) {
+
+            log.error("Request POST for validation of bidList/update "
+                            +
+                            "form for bidList id: {}, errors: {}",
+                    id, result);
+
             return "bidList/update";
         }
 
         bidListService.saveBidList(bidListDto);
+
+        log.info("Request POST for successful bidList/update"
+                + " SUCCESS(200 OK)");
 
         return "redirect:/bidList/list";
     }
@@ -134,10 +167,17 @@ public class BidListController {
         Optional<BidList> bidList = bidListService.getOneBidList(id);
 
         if (bidList.isEmpty()) {
+
+            log.error("Error for deleting bidList"
+                    + "redirection to bidList list page");
+
             return "redirect:/bidList/list";
         }
 
         bidListService.deleteBidList(bidList.get());
+
+        log.info("Request GET for successful bidList/delete"
+                + " SUCCESS(200 OK)");
 
         return "bidList/list";
     }

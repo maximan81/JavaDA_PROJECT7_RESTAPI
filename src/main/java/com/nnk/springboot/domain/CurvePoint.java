@@ -6,8 +6,11 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.sql.Timestamp;
 
 /**
@@ -15,6 +18,8 @@ import java.sql.Timestamp;
  * entity.
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "curvepoint")
 public class CurvePoint {
@@ -22,12 +27,17 @@ public class CurvePoint {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
+  @NotNull
   private Integer curveId;
 
   private Timestamp asOfDate;
 
+  @Column(columnDefinition="Decimal(10,2) default '0.00'")
+  @NotNull
   private Double term;
 
+  @Column(columnDefinition="Decimal(10,2) default '0.00'")
+  @NotNull
   private Double value;
 
   private Timestamp creationDate;

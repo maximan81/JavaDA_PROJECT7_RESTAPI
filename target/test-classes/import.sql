@@ -1,6 +1,6 @@
-DROP SCHEMA IF EXISTS poseidendb;
 
-CREATE SCHEMA poseidendb;
+
+CREATE SCHEMA IF NOT EXISTS poseidendb;
 
 use poseidendb;
 
@@ -62,27 +62,44 @@ CREATE TABLE IF NOT EXISTS Trade (
 
   PRIMARY KEY (trade_id)
 );
+insert into trade (account, type, buy_quantity, sell_quantity, buy_price, sell_price, trade_date, security, status, trader, benchmark, book, creation_name, creation_date, revision_name, revision_date, deal_name, deal_type, source_list_id, side) values ('trade account 1', 'type 1', 12, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+insert into trade (account, type, buy_quantity, sell_quantity, buy_price, sell_price, trade_date, security, status, trader, benchmark, book, creation_name, creation_date, revision_name, revision_date, deal_name, deal_type, source_list_id, side) values ('trade account 2', 'type 2', 3, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+insert into trade (account, type, buy_quantity, sell_quantity, buy_price, sell_price, trade_date, security, status, trader, benchmark, book, creation_name, creation_date, revision_name, revision_date, deal_name, deal_type, source_list_id, side) values ('trade account 3', 'type 3', 18, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+insert into trade (account, type, buy_quantity, sell_quantity, buy_price, sell_price, trade_date, security, status, trader, benchmark, book, creation_name, creation_date, revision_name, revision_date, deal_name, deal_type, source_list_id, side) values ('trade account 4', 'type 4', 9, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+insert into trade (account, type, buy_quantity, sell_quantity, buy_price, sell_price, trade_date, security, status, trader, benchmark, book, creation_name, creation_date, revision_name, revision_date, deal_name, deal_type, source_list_id, side) values ('trade account 5', 'type 5', 2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+
 
 CREATE TABLE IF NOT EXISTS CurvePoint (
   id tinyint(4) NOT NULL AUTO_INCREMENT,
   curve_id tinyint,
   as_of_date TIMESTAMP,
-  term DOUBLE ,
-  value DOUBLE ,
+  term DOUBLE not null ,
+  value DOUBLE not null ,
   creation_date TIMESTAMP ,
 
   PRIMARY KEY (id)
 );
+insert into CurvePoint (curve_id, as_of_date, term, value, creation_date) values (5, null, 10.0, 20.0, null);
+insert into CurvePoint (curve_id, as_of_date, term, value, creation_date) values (7, null, 17.0, 15.0, null);
+insert into CurvePoint (curve_id, as_of_date, term, value, creation_date) values (10, null, 20.0, 30.0, null);
+insert into CurvePoint (curve_id, as_of_date, term, value, creation_date) values (13, null, 40.0, 33.0, null);
+insert into CurvePoint (curve_id, as_of_date, term, value, creation_date) values (15, null, 22.0, 60.0, null);
+
 
 CREATE TABLE IF NOT EXISTS Rating (
   id tinyint(4) NOT NULL AUTO_INCREMENT,
   moodys_rating VARCHAR(125),
-  sand_p_rating VARCHAR(125),
+  sandprating VARCHAR(125),
   fitch_rating VARCHAR(125),
   order_number tinyint,
 
   PRIMARY KEY (id)
 );
+insert into Rating (moodys_rating, sandprating, fitch_rating, order_number)values ('Moodys Rating 1', 'Sand PRating 1', 'Fitch Rating 1', 10);
+insert into Rating (moodys_rating, sandprating, fitch_rating, order_number)values ('Moodys Rating 2', 'Sand PRating 2', 'Fitch Rating 2', 20);
+insert into Rating (moodys_rating, sandprating, fitch_rating, order_number)values ('Moodys Rating 3', 'Sand PRating 3', 'Fitch Rating 3', 30);
+insert into Rating (moodys_rating, sandprating, fitch_rating, order_number)values ('Moodys Rating 4', 'Sand PRating 4', 'Fitch Rating 4', 40);
+insert into Rating (moodys_rating, sandprating, fitch_rating, order_number)values ('Moodys Rating 4', 'Sand PRating 5', 'Fitch Rating 5', 50);
 
 CREATE TABLE IF NOT EXISTS RuleName (
   id tinyint(4) NOT NULL AUTO_INCREMENT,
@@ -95,6 +112,11 @@ CREATE TABLE IF NOT EXISTS RuleName (
 
   PRIMARY KEY (id)
 );
+insert into RuleName (name, description, json, template, sql_str, sql_part) values ('rule name 1', 'description 1', 'json 1', 'template 1', 'sqlStr 1', 'sqlPart 1');
+insert into RuleName (name, description, json, template, sql_str, sql_part) values ('rule name 2', 'description 2', 'json 2', 'template 2', 'sqlStr 2', 'sqlPart 2');
+insert into RuleName (name, description, json, template, sql_str, sql_part) values ('rule name 3', 'description 3', 'json 3', 'template 3', 'sqlStr 3', 'sqlPart 3');
+insert into RuleName (name, description, json, template, sql_str, sql_part) values ('rule name 4', 'description 4', 'json 4', 'template 4', 'sqlStr 4', 'sqlPart 4');
+insert into RuleName (name, description, json, template, sql_str, sql_part) values ('rule name 5', 'description 5', 'json 5', 'template 5', 'sqlStr 5', 'sqlPart 5');
 
 CREATE TABLE IF NOT EXISTS Users (
   id tinyint(4) NOT NULL AUTO_INCREMENT,
@@ -107,4 +129,6 @@ CREATE TABLE IF NOT EXISTS Users (
 );
 
 insert into Users(fullname, username, password, role) values('Administrator', 'admin', '$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa', 'ADMIN');
-insert into Users(fullname, username, password, role) values('User', 'user', '$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa', 'USER')
+insert into Users(fullname, username, password, role) values('User 1', 'user 1', '$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa', 'USER');
+insert into Users(fullname, username, password, role) values('User 2', 'user 2', '$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa', 'USER');
+insert into Users(fullname, username, password, role) values('User 3', 'user 3', '$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa', 'USER');

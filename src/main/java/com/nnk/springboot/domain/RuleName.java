@@ -13,6 +13,8 @@ import java.sql.Timestamp;
  * entity.
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "rulename")
 public class RuleName {
@@ -20,16 +22,18 @@ public class RuleName {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
+  @NotBlank
   private String name;
 
+  @NotBlank
   private String description;
-
+  @NotBlank
   private String json;
-
+  @NotBlank
   private String template;
-
+  @NotBlank
   private String sqlStr;
-
+  @NotBlank
   private String sqlPart;
 
   public RuleName(String name, String description, String json, String template, String sqlStr, String sqlPart) {

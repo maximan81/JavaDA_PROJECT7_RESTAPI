@@ -1,21 +1,11 @@
 package com.nnk.springboot.controllers;
 
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.containsString;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -24,29 +14,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+
 @Tag("BidListControllerTest")
 @DisplayName("Account controller test logic")
-public class BidListControllerTest {
-
-  @Autowired
-  private MockMvc mvc;
-
-  @Autowired
-  WebApplicationContext webApplicationContext;
-
-  @BeforeEach
-  protected void setUp() {
-    mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-            .build();
-  }
-
+public class BidListControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("home, should display bid list page")
   public void home_ShouldReturnHomePage() throws Exception {
-    mvc.perform(get("/bidList/list"))
+    this.mvc.perform(get("/bidList/list"))
             .andExpect(view().name("bidList/list"))
             .andExpect(status().isOk())
             .andExpect(content().string(containsString("1")))
