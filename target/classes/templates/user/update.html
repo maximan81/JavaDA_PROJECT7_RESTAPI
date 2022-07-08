@@ -4,7 +4,8 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>Home</title>
-	<link rel="stylesheet" href="../../css/bootstrap.min.css" >
+	<link rel="stylesheet" href="../../../css/style.css" >
+	<link rel="stylesheet" href="../../../css/bootstrap.min.css" >
 </head>
 <body>
 <div class="container">
@@ -14,7 +15,7 @@
 	</div>
 
 	<div class="row">
-		<form action="#" th:action="@{/user/update/{id}(id=${user.id})}" th:object="${user}" method="post" class="form-horizontal" style="width: 100%">
+		<form action="#" th:action="@{/admin/user/update/{id}(id=${user.id})}" th:object="${user}" method="post" class="form-horizontal" style="width: 100%">
 			<input type="hidden" th:field="*{id}" th:value="${user.id}">
 			<div class="form-group">
 				<label for="fullname" class="col-sm-2 control-label">Full Name</label>
@@ -40,8 +41,8 @@
 			<div class="form-group">
 				<label for="password" class="col-sm-2 control-label">Role</label>
 				<div class="col-sm-10">
-					<label class="checkbox-inline"><input type="radio" th:field="*{role}" th:value="ADMIN">Admin</label>
-					<label class="checkbox-inline"><input type="radio" th:field="*{role}" th:value="USER">User</label>
+					<label class="checkbox-inline"><input type="radio" th:field="*{role}" th:value="ROLE_ADMIN">Admin</label>
+					<label class="checkbox-inline"><input type="radio" th:field="*{role}" th:value="ROLE_USER">User</label>
 				</div>
 			</div>
 
@@ -49,7 +50,7 @@
 			<div class="form-group">
 				<div class="col-sm-12">
 					<input type="hidden" th:field="*{id}">
-					<a class="btn btn-danger btn-sm" href="/user/list">Cancel</a>
+					<a class="btn btn-danger btn-sm" href="/admin/user/list">Cancel</a>
 					<input class="btn btn-primary btn-sm" type="submit" value="Update User">
 				</div>
 			</div>

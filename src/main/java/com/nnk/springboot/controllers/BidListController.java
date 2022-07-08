@@ -37,7 +37,7 @@ public class BidListController {
      * @return bidList/list view
      */
 
-    @GetMapping("/bidList/list")
+    @GetMapping("/user/bidList/list")
     public String home(Model model)
     {
         Iterable<BidList> bidLists = bidListService.getAllBidList();
@@ -57,7 +57,7 @@ public class BidListController {
      * @param bidListDto a bidListDto
      * @return bidList/add view
      */
-    @GetMapping("/bidList/add")
+    @GetMapping("/user/bidList/add")
     public String addBidForm(Model model, BidListDto bidListDto) {
         model.addAttribute("bidListDto", bidListDto);
 
@@ -75,7 +75,7 @@ public class BidListController {
      * @param result a BindingResult
      * @return bidList/list view
      */
-    @PostMapping("/bidList/validate")
+    @PostMapping("/user/bidList/validate")
     public String validate(@Valid BidListDto bidListDto, BindingResult result) {
         if (result.hasErrors()) {
 
@@ -90,7 +90,7 @@ public class BidListController {
         log.info("Request POST for successful bidList/add"
                 + " SUCCESS(200 OK)");
 
-        return "redirect:/bidList/list";
+        return "redirect:/user/bidList/list";
     }
 
     /**
@@ -100,7 +100,7 @@ public class BidListController {
      * @param model a model
      * @return bidList/update view
      */
-    @GetMapping("/bidList/update/{id}")
+    @GetMapping("/user/bidList/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         Optional<BidList> bidList = bidListService.getOneBidList(id);
 
@@ -109,7 +109,7 @@ public class BidListController {
             log.error("Error for displaying bidList/update page "
                     + " redirection to bidList list page");
 
-            return "redirect:/bidList/list";
+            return "redirect:/user/bidList/list";
         }
 
         model.addAttribute("bidListDto", new BidListDto(
@@ -133,7 +133,7 @@ public class BidListController {
      * @param result a BindingResult
      * @return bidList/list view
      */
-    @PostMapping("/bidList/update/{id}")
+    @PostMapping("/user/bidList/update/{id}")
     public String updateBid(@PathVariable("id") Integer id, @Valid BidListDto bidListDto,
                              BindingResult result, Model model) {
 
@@ -153,7 +153,7 @@ public class BidListController {
         log.info("Request POST for successful bidList/update"
                 + " SUCCESS(200 OK)");
 
-        return "redirect:/bidList/list";
+        return "redirect:/user/bidList/list";
     }
 
     /**
@@ -162,7 +162,7 @@ public class BidListController {
      * @param id a bidList id
      * @return bidList/list view
      */
-    @GetMapping("/bidList/delete/{id}")
+    @GetMapping("/user/bidList/delete/{id}")
     public String deleteBid(@PathVariable("id") Integer id) {
         Optional<BidList> bidList = bidListService.getOneBidList(id);
 
@@ -171,7 +171,7 @@ public class BidListController {
             log.error("Error for deleting bidList"
                     + "redirection to bidList list page");
 
-            return "redirect:/bidList/list";
+            return "redirect:/user/bidList/list";
         }
 
         bidListService.deleteBidList(bidList.get());
@@ -179,6 +179,6 @@ public class BidListController {
         log.info("Request GET for successful bidList/delete"
                 + " SUCCESS(200 OK)");
 
-        return "bidList/list";
+        return "redirect:/user/bidList/list";
     }
 }

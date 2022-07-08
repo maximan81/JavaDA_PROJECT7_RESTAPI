@@ -35,7 +35,7 @@ public class CurveController {
    * @param model a model
    * @return curvePoint/list view
    */
-  @RequestMapping("/curvePoint/list")
+  @RequestMapping("/user/curvePoint/list")
     public String home(Model model)
     {
         Iterable<CurvePoint> curvePoints = curvePointService.getCurvePoints();
@@ -55,7 +55,7 @@ public class CurveController {
    * @param curvePoint a bidListDto
    * @return curvePoint/add view
    */
-    @GetMapping("/curvePoint/add")
+    @GetMapping("/user/curvePoint/add")
     public String addCurvePointForm(Model model, CurvePoint curvePoint) {
         model.addAttribute("curvePoint", curvePoint);
 
@@ -73,7 +73,7 @@ public class CurveController {
    * @param result a BindingResult
    * @return curvePoint/list view
    */
-    @PostMapping("/curvePoint/validate")
+    @PostMapping("/user/curvePoint/validate")
     public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
         if (result.hasErrors()){
 
@@ -88,7 +88,7 @@ public class CurveController {
       log.info("Request POST for successful curvePoint/add"
               + " SUCCESS(200 OK)");
 
-        return "redirect:/curvePoint/list";
+        return "redirect:/user/curvePoint/list";
     }
 
   /**
@@ -98,7 +98,7 @@ public class CurveController {
    * @param model a model
    * @return curvePoint/update view
    */
-    @GetMapping("/curvePoint/update/{id}")
+    @GetMapping("/user/curvePoint/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         Optional<CurvePoint> curvePoint = curvePointService.getCurvePoint(id);
 
@@ -107,7 +107,7 @@ public class CurveController {
           log.error("Error for displaying curvePoint/update page "
                   + " redirection to curvePoint list page");
 
-          return "redirect:/curvePoint/list";
+          return "redirect:/user/curvePoint/list";
         }
 
         model.addAttribute("curvePoint", curvePoint.get());
@@ -126,7 +126,7 @@ public class CurveController {
    * @param result a BindingResult
    * @return curvePoint/list view
    */
-    @PostMapping("/curvePoint/update/{id}")
+    @PostMapping("/user/curvePoint/update/{id}")
     public String updateCurvePoint(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint,
                              BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -142,7 +142,7 @@ public class CurveController {
        log.info("Request POST for successful curvePoint/update"
               + " SUCCESS(200 OK)");
 
-        return "redirect:/curvePoint/list";
+        return "redirect:/user/curvePoint/list";
     }
 
   /**
@@ -151,7 +151,7 @@ public class CurveController {
    * @param id a curvePoint id
    * @return curvePoint/list view
    */
-    @GetMapping("/curvePoint/delete/{id}")
+    @GetMapping("/user/curvePoint/delete/{id}")
     public String deleteCurvePoint(@PathVariable("id") Integer id, Model model) {
         Optional<CurvePoint> curvePoint = curvePointService.getCurvePoint(id);
 
@@ -160,7 +160,7 @@ public class CurveController {
           log.error("Error for deleting curvePoint"
                   + "redirection to curvePoint list page");
 
-          return "curvePoint/list";
+          return "redirect:/user/curvePoint/list";
         }
 
         curvePointService.deleteCurvePoint(curvePoint.get());
@@ -168,6 +168,6 @@ public class CurveController {
       log.info("Request GET for successful curvePoint/delete"
               + " SUCCESS(200 OK)");
 
-        return "curvePoint/list";
+        return "redirect:/user/curvePoint/list";
     }
 }

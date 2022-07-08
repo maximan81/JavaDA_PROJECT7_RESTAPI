@@ -22,7 +22,7 @@ public class RuleNameControllerTest extends AbstractTest {
   @Test
   @DisplayName("home, should display ruleName list page")
   public void home_ShouldReturnHomePage() throws Exception {
-    this.mvc.perform(get("/ruleName/list"))
+    this.mvc.perform(get("/user/ruleName/list"))
             .andExpect(view().name("ruleName/list"))
             .andExpect(status().isOk())
             .andExpect(content().string(containsString("rule name 1")))
@@ -37,7 +37,7 @@ public class RuleNameControllerTest extends AbstractTest {
   @Test
   @DisplayName("AddRuleNameForm should display add ruleName  form")
   public void addRuleNameForm_ShouldDisplayAddRuleNameForm() throws Exception {
-    mvc.perform(get("/ruleName/add"))
+    mvc.perform(get("/user/ruleName/add"))
             .andExpect(view().name("ruleName/add"))
             .andExpect(status().isOk())
             .andDo(print());
@@ -46,7 +46,7 @@ public class RuleNameControllerTest extends AbstractTest {
   @Test
   @DisplayName("validate should return error for given blank form fields")
   public void validate_ShouldReturnError_forGivenBlankFormFields() throws Exception {
-    mvc.perform(post("/ruleName/validate")
+    mvc.perform(post("/user/ruleName/validate")
                     .param("name", "")
                     .param("description", "")
                     .param("template", "")
@@ -64,14 +64,14 @@ public class RuleNameControllerTest extends AbstractTest {
   @Test
   @DisplayName("validate should added new ruleName for given correct form fields")
   public void validate_ShouldAddNewRuleName_forGivenCorrectFormFields() throws Exception {
-    mvc.perform(post("/ruleName/validate")
+    mvc.perform(post("/user/ruleName/validate")
                     .param("name", "name 6")
                     .param("description", "description 6")
                     .param("template", "template 6")
                     .param("json", "json 6")
                     .param("sqlStr", "sqlStr 6")
                     .param("sqlPart", "sqlPart 6"))
-            .andExpect(view().name("redirect:/ruleName/list"))
+            .andExpect(view().name("redirect:/user/ruleName/list"))
             .andExpect(status().is3xxRedirection())
             .andDo(print());
   }
@@ -79,8 +79,8 @@ public class RuleNameControllerTest extends AbstractTest {
   @Test
   @DisplayName("showUpdateForm should redirect to ruleName list page for given non existing ruleName id")
   public void showUpdateForm_ShouldRedirectToRuleNameListForm_ForGivenNotExistsRuleNameId() throws Exception {
-    mvc.perform(get("/ruleName/update/100"))
-            .andExpect(view().name("redirect:/ruleName/list"))
+    mvc.perform(get("/user/ruleName/update/100"))
+            .andExpect(view().name("redirect:/user/ruleName/list"))
             .andExpect(status().is3xxRedirection())
             .andDo(print());
   }
@@ -88,7 +88,7 @@ public class RuleNameControllerTest extends AbstractTest {
   @Test
   @DisplayName("showUpdateForm should display update form for given existing ruleName id")
   public void showUpdateForm_ShouldDisplayUpdateForm_ForGivenExistRuleNameId() throws Exception {
-    mvc.perform(get("/ruleName/update/1"))
+    mvc.perform(get("/user/ruleName/update/1"))
             .andExpect(view().name("ruleName/update"))
             .andExpect(status().isOk())
             .andDo(print());
@@ -97,7 +97,7 @@ public class RuleNameControllerTest extends AbstractTest {
   @Test
   @DisplayName("updateRuleName should return error for given blank form fields")
   public void UpdateRuleName_ShouldReturnError_forGivenBlankFormFields() throws Exception {
-    mvc.perform(post("/ruleName/update/1")
+    mvc.perform(post("/user/ruleName/update/1")
                     .param("name", "")
                     .param("description", "")
                     .param("template", "")
@@ -114,14 +114,14 @@ public class RuleNameControllerTest extends AbstractTest {
   @Test
   @DisplayName("updateRuleName should update ruleName for given correct form fields")
   public void updateRuleName_ShouldUpdateRuleName_forGivenCorrectFormFields() throws Exception {
-    mvc.perform(post("/ruleName/update/1")
+    mvc.perform(post("/user/ruleName/update/1")
                     .param("name", "name 1")
                     .param("description", "description 1")
                     .param("template", "template 1")
                     .param("json", "json update")
                     .param("sqlStr", "sqlStr update")
                     .param("sqlPart", "sqlPart 1"))
-            .andExpect(view().name("redirect:/ruleName/list"))
+            .andExpect(view().name("redirect:/user/ruleName/list"))
             .andExpect(status().is3xxRedirection())
             .andDo(print());
   }
@@ -130,18 +130,18 @@ public class RuleNameControllerTest extends AbstractTest {
   @Test
   @DisplayName("deleteRuleName should redirect to ruleName  list page for given not existing ruleName  id")
   public void deleteRuleName_ShouldRedirectToRuleNameList_ForGivenNotExistRuleNameId() throws Exception {
-    mvc.perform(get("/ruleName/delete/50"))
-            .andExpect(view().name("ruleName/list"))
-            .andExpect(status().isOk())
+    mvc.perform(get("/user/ruleName/delete/50"))
+            .andExpect(view().name("redirect:/user/ruleName/list"))
+            .andExpect(status().is3xxRedirection())
             .andDo(print());
   }
 
   @Test
   @DisplayName("deleteRuleName should delete ruleName for given existing ruleName id")
   public void deleteRuleName_ShouldDeleteRuleName_ForGivenExistRuleNameId() throws Exception {
-    mvc.perform(get("/ruleName/delete/4"))
-            .andExpect(view().name("ruleName/list"))
-            .andExpect(status().isOk())
+    mvc.perform(get("/user/ruleName/delete/4"))
+            .andExpect(view().name("redirect:/user/ruleName/list"))
+            .andExpect(status().is3xxRedirection())
             .andExpect(content().string(not(containsString("name 4"))))
             .andDo(print());
   }
