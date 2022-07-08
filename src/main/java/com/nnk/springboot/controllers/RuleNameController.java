@@ -31,7 +31,7 @@ public class RuleNameController {
      * @param model a model
      * @return ruleName/list view
      */
-    @RequestMapping("/ruleName/list")
+    @RequestMapping("/user/ruleName/list")
     public String home(Model model)
     {
         Iterable<RuleName> ruleNames = ruleNameService.getRuleNames();
@@ -51,7 +51,7 @@ public class RuleNameController {
      * @param ruleName a ruleName
      * @return ruleName/add view
      */
-    @GetMapping("/ruleName/add")
+    @GetMapping("/user/ruleName/add")
     public String addRuleNameForm(Model model, RuleName ruleName) {
         model.addAttribute("ruleName", ruleName);
 
@@ -69,7 +69,7 @@ public class RuleNameController {
      * @param result a BindingResult
      * @return ruleName/list view
      */
-    @PostMapping("/ruleName/validate")
+    @PostMapping("/user/ruleName/validate")
     public String validate(@Valid RuleName ruleName, BindingResult result, Model model) {
 
         if (result.hasErrors()){
@@ -85,7 +85,7 @@ public class RuleNameController {
         log.info("Request POST for successful ruleName/add"
                 + " SUCCESS(200 OK)");
 
-        return "redirect:/ruleName/list";
+        return "redirect:/user/ruleName/list";
     }
 
     /**
@@ -95,7 +95,7 @@ public class RuleNameController {
      * @param model a model
      * @return ruleName/update view
      */
-    @GetMapping("/ruleName/update/{id}")
+    @GetMapping("/user/ruleName/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         Optional<RuleName> ruleName = ruleNameService.getRuleName(id);
 
@@ -104,7 +104,7 @@ public class RuleNameController {
             log.error("Error for displaying ruleName/update page "
                     + " redirection to ruleName list page");
 
-            return "redirect:/ruleName/list";
+            return "redirect:/user/ruleName/list";
         }
 
         model.addAttribute("ruleName", ruleName.get());
@@ -123,7 +123,7 @@ public class RuleNameController {
      * @param result a BindingResult
      * @return ruleName/list view
      */
-    @PostMapping("/ruleName/update/{id}")
+    @PostMapping("/user/ruleName/update/{id}")
     public String updateRuleName(@PathVariable("id") Integer id, @Valid RuleName ruleName,
                                    BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -139,7 +139,7 @@ public class RuleNameController {
         log.info("Request POST for successful ruleName/update"
                 + " SUCCESS(200 OK)");
 
-        return "redirect:/ruleName/list";
+        return "redirect:/user/ruleName/list";
     }
 
     /**
@@ -148,7 +148,7 @@ public class RuleNameController {
      * @param id a ruleName id
      * @return ruleName/list view
      */
-    @GetMapping("/ruleName/delete/{id}")
+    @GetMapping("/user/ruleName/delete/{id}")
     public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
 
         Optional<RuleName> ruleName = ruleNameService.getRuleName(id);
@@ -158,7 +158,7 @@ public class RuleNameController {
             log.error("Error for deleting ruleName"
                     + "redirection to ruleName list page");
 
-            return "ruleName/list";
+            return "redirect:/user/ruleName/list";
         }
 
         ruleNameService.deleteRuleName(ruleName.get());
@@ -166,6 +166,6 @@ public class RuleNameController {
         log.info("Request GET for successful ruleName/delete"
                 + " SUCCESS(200 OK)");
 
-        return "ruleName/list";
+        return "redirect:/user/ruleName/list";
     }
 }

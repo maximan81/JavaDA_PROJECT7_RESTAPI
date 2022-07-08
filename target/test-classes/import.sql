@@ -1,5 +1,4 @@
 
-
 CREATE SCHEMA IF NOT EXISTS poseidendb;
 
 use poseidendb;
@@ -128,7 +127,7 @@ CREATE TABLE IF NOT EXISTS Users (
   PRIMARY KEY (id)
 );
 
-insert into Users(fullname, username, password, role) values('Administrator', 'admin', '$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa', 'ADMIN');
-insert into Users(fullname, username, password, role) values('User 1', 'user 1', '$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa', 'USER');
-insert into Users(fullname, username, password, role) values('User 2', 'user 2', '$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa', 'USER');
-insert into Users(fullname, username, password, role) values('User 3', 'user 3', '$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa', 'USER');
+insert into Users(fullname, username, password, role) values('Administrator', 'admin', '$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa', 'ROLE_ADMIN');
+insert into Users(fullname, username, password, role) values('User 1', 'user 1', '$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa', 'ROLE_USER');
+insert into Users(fullname, username, password, role) values('User 2', 'user 2', '$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa', 'ROLE_USER');
+insert into Users(fullname, username, password, role) values('User 3', 'user 3', '$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa', 'ROLE_USER');

@@ -106,5 +106,5 @@ CREATE TABLE IF NOT EXISTS Users (
   PRIMARY KEY (id)
 );
 
-insert into Users(fullname, username, password, role) values('Administrator', 'admin', '$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa', 'ADMIN');
-insert into Users(fullname, username, password, role) values('User', 'user', '$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa', 'USER')
+insert into Users(fullname, username, password, role) values('Administrator', 'admin', '$2a$10$BKCfT2p8s.Mzv2zS03KOW.OwCPrwpsSyej8p1hGIES5dzSMbcKp8y', 'ROLE_ADMIN');
+insert into Users(fullname, username, password, role) values('User', 'user', '$2a$10$BKCfT2p8s.Mzv2zS03KOW.OwCPrwpsSyej8p1hGIES5dzSMbcKp8y', 'ROLE_USER')

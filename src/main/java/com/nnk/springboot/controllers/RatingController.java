@@ -36,7 +36,7 @@ public class RatingController {
      * @param model a model
      * @return rating/list view
      */
-    @RequestMapping("/rating/list")
+    @RequestMapping("/user/rating/list")
     public String home(Model model)
     {
         Iterable<Rating> ratings = ratingService.getRatings();
@@ -56,7 +56,7 @@ public class RatingController {
      * @param rating a rating
      * @return rating/add view
      */
-    @GetMapping("/rating/add")
+    @GetMapping("/user/rating/add")
     public String addRatingForm(Model model, Rating rating) {
 
         model.addAttribute("rating", rating);
@@ -75,7 +75,7 @@ public class RatingController {
      * @param result a BindingResult
      * @return rating/list view
      */
-    @PostMapping("/rating/validate")
+    @PostMapping("/user/rating/validate")
     public String validate(@Valid Rating rating, BindingResult result, Model model) {
 
         if (result.hasErrors()){
@@ -91,7 +91,7 @@ public class RatingController {
         log.info("Request POST for successful rating/add"
                 + " SUCCESS(200 OK)");
 
-        return "redirect:/rating/list";
+        return "redirect:/user/rating/list";
     }
 
     /**
@@ -101,7 +101,7 @@ public class RatingController {
      * @param model a model
      * @return rating/update view
      */
-    @GetMapping("/rating/update/{id}")
+    @GetMapping("/user/rating/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         Optional<Rating> rating = ratingService.getRating(id);
 
@@ -110,7 +110,7 @@ public class RatingController {
             log.error("Error for displaying rating/update page "
                     + " redirection to rating list page");
 
-            return "redirect:/rating/list";
+            return "redirect:/user/rating/list";
         }
 
         model.addAttribute("rating", rating.get());
@@ -129,7 +129,7 @@ public class RatingController {
      * @param result a BindingResult
      * @return rating/list view
      */
-    @PostMapping("/rating/update/{id}")
+    @PostMapping("/user/rating/update/{id}")
     public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating,
                              BindingResult result, Model model) {
 
@@ -148,7 +148,7 @@ public class RatingController {
         log.info("Request POST for successful rating/update"
                 + " SUCCESS(200 OK)");
 
-        return "redirect:/rating/list";
+        return "redirect:/user/rating/list";
     }
 
     /**
@@ -157,7 +157,7 @@ public class RatingController {
      * @param id a rating id
      * @return rating/list view
      */
-    @GetMapping("/rating/delete/{id}")
+    @GetMapping("/user/rating/delete/{id}")
     public String deleteRating(@PathVariable("id") Integer id, Model model) {
 
         Optional<Rating> rating = ratingService.getRating(id);
@@ -167,7 +167,7 @@ public class RatingController {
             log.error("Error for deleting rating"
                     + "redirection to rating list page");
 
-            return "rating/list";
+            return "redirect:/user/rating/list";
         }
 
         ratingService.deleteRating(rating.get());
@@ -175,6 +175,6 @@ public class RatingController {
         log.info("Request GET for successful rating/delete"
                 + " SUCCESS(200 OK)");
 
-        return "rating/list";
+        return "redirect:/user/rating/list";
     }
 }

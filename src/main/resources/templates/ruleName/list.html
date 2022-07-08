@@ -4,17 +4,18 @@
 <head>
 <meta charset="utf-8"/>
 <title>Home</title>
+	<link rel="stylesheet" href="../../css/style.css" >
 <link rel="stylesheet" href="../../css/bootstrap.min.css" >
 </head>
 <body>
 <div class="container">
 	<div class="row">
 		<div class="col-6">
-			<a href="/bidList/list">Bid List</a>&nbsp;|&nbsp;
-			<a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
-			<a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
-			<a href="/trade/list">Trade</a>&nbsp;|&nbsp;
-			<a href="/ruleName/list">Rule</a>
+			<a href="/user/bidList/list">Bid List</a>&nbsp;|&nbsp;
+			<a href="/user/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
+			<a href="/user/rating/list">Ratings</a>&nbsp;|&nbsp;
+			<a href="/user/trade/list">Trade</a>&nbsp;|&nbsp;
+			<a href="/user/ruleName/list">Rule</a>
 		</div>
 		<div class="col-6 text-right">
 			Logged in user: <b th:inline="text"  class="user"> [[${#httpServletRequest.remoteUser}]] </b>
@@ -25,7 +26,7 @@
 	</div>
 	<div class="row"><h2>Rule List</h2></div>
 	<div class="row">
-		<a href="/ruleName/add" class="btn btn-primary btn-sm">Add New</a>
+		<a href="/user/ruleName/add" class="btn btn-primary btn-sm">Add New</a>
 		<table class="table table-bordered">
 			<thead>
 				<tr>
@@ -49,8 +50,8 @@
 				<td th:text="${ruleName.sqlStr}"></td>
 				<td th:text="${ruleName.sqlPart}"></td>
 				<td style="width: 15%" class="text-center">
-					<a th:href="@{/ruleName/update/{id}(id=${ruleName.id})}">Edit</a>&nbsp;|&nbsp;
-					<a th:href="@{/ruleName/delete/{id}(id=${ruleName.id})}">Delete</a>
+					<a th:href="@{/user/ruleName/update/{id}(id=${ruleName.id})}">Edit</a>&nbsp;|&nbsp;
+					<a th:href="@{/user/ruleName/delete/{id}(id=${ruleName.id})}">Delete</a>
 				</td>
 			</tr>
 			</tbody>

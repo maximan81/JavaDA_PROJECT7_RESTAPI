@@ -31,7 +31,7 @@ public class TradeController {
      * @param model a model
      * @return trade/list view
      */
-    @RequestMapping("/trade/list")
+    @RequestMapping("/user/trade/list")
     public String home(Model model)
     {
         Iterable<Trade> trades = tradeService.getTrades();
@@ -51,7 +51,7 @@ public class TradeController {
      * @param trade a trade
      * @return trade/add view
      */
-    @GetMapping("/trade/add")
+    @GetMapping("/user/trade/add")
     public String addTradeForm(Model model, Trade trade) {
         model.addAttribute("trade", trade);
 
@@ -69,7 +69,7 @@ public class TradeController {
      * @param result a BindingResult
      * @return trade/list view
      */
-    @PostMapping("/trade/validate")
+    @PostMapping("/user/trade/validate")
     public String validate(@Valid Trade trade, BindingResult result, Model model) {
         if (result.hasErrors()){
 
@@ -84,7 +84,7 @@ public class TradeController {
         log.info("Request POST for successful trade/add"
                 + " SUCCESS(200 OK)");
 
-        return "redirect:/trade/list";
+        return "redirect:/user/trade/list";
     }
 
     /**
@@ -94,7 +94,7 @@ public class TradeController {
      * @param model a model
      * @return trade/update view
      */
-    @GetMapping("/trade/update/{id}")
+    @GetMapping("/user/trade/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
 
         Optional<Trade> trade = tradeService.getTrade(id);
@@ -104,7 +104,7 @@ public class TradeController {
             log.error("Error for displaying trade/update page "
                     + " redirection to trade list page");
 
-            return "redirect:/trade/list";
+            return "redirect:/user/trade/list";
         }
 
         model.addAttribute("trade", trade.get());
@@ -123,7 +123,7 @@ public class TradeController {
      * @param result a BindingResult
      * @return trade/list view
      */
-    @PostMapping("/trade/update/{id}")
+    @PostMapping("/user/trade/update/{id}")
     public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade,
                                    BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -139,7 +139,7 @@ public class TradeController {
         log.info("Request POST for successful trade/update"
                 + " SUCCESS(200 OK)");
 
-        return "redirect:/trade/list";
+        return "redirect:/user/trade/list";
     }
 
     /**
@@ -148,7 +148,7 @@ public class TradeController {
      * @param id a trade id
      * @return trade/list view
      */
-    @GetMapping("/trade/delete/{id}")
+    @GetMapping("/user/trade/delete/{id}")
     public String deleteTrade(@PathVariable("id") Integer id, Model model) {
 
         Optional<Trade> trade = tradeService.getTrade(id);
@@ -158,7 +158,7 @@ public class TradeController {
             log.error("Error for deleting trade"
                     + "redirection to trade list page");
 
-            return "trade/list";
+            return "redirect:/user/trade/list";
         }
 
         tradeService.deleteTrade(trade.get());
@@ -166,6 +166,6 @@ public class TradeController {
         log.info("Request GET for successful trade/delete"
                 + " SUCCESS(200 OK)");
 
-        return "trade/list";
+        return "redirect:/user/trade/list";
     }
 }

@@ -32,7 +32,7 @@ public class UserController {
      * @param model a model
      * @return user/list view
      */
-    @RequestMapping("/user/list")
+    @RequestMapping("/admin/user/list")
     public String home(Model model)
     {
         Iterable<User> users = userService.getUsers();
@@ -52,7 +52,7 @@ public class UserController {
      * @param user a user
      * @return user/add view
      */
-    @GetMapping("/user/add")
+    @GetMapping("/admin/user/add")
     public String addUser(Model model, User user) {
 
         model.addAttribute("user", user);
@@ -71,7 +71,7 @@ public class UserController {
      * @param result a BindingResult
      * @return user/list view
      */
-    @PostMapping("/user/validate")
+    @PostMapping("/admin/user/validate")
     public String validate(@Valid User user, BindingResult result, Model model) {
 
         if (result.hasErrors()) {
@@ -90,7 +90,7 @@ public class UserController {
         log.info("Request POST for successful user/add"
                 + " SUCCESS(200 OK)");
 
-        return "redirect:/user/list";
+        return "redirect:/admin/user/list";
     }
 
     /**
@@ -100,7 +100,7 @@ public class UserController {
      * @param model a model
      * @return user/update view
      */
-    @GetMapping("/user/update/{id}")
+    @GetMapping("/admin/user/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         Optional<User> user = userService.getUser(id);
 
@@ -109,7 +109,7 @@ public class UserController {
             log.error("Error for displaying user/update page "
                     + " redirection to user list page");
 
-            return "redirect:/user/list";
+            return "redirect:/admin/user/list";
         }
 
         user.get().setPassword("");
@@ -130,7 +130,7 @@ public class UserController {
      * @param result a BindingResult
      * @return user/list view
      */
-    @PostMapping("/user/update/{id}")
+    @PostMapping("/admin/user/update/{id}")
     public String updateUser(@PathVariable("id") Integer id, @Valid User user,
                              BindingResult result, Model model) {
 
@@ -150,7 +150,7 @@ public class UserController {
         log.info("Request POST for successful user/update"
                 + " SUCCESS(200 OK)");
 
-        return "redirect:/user/list";
+        return "redirect:/admin/user/list";
     }
 
     /**
@@ -159,7 +159,7 @@ public class UserController {
      * @param id a user id
      * @return user/list view
      */
-    @GetMapping("/user/delete/{id}")
+    @GetMapping("/admin/user/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id, Model model) {
         Optional<User> user = userService.getUser(id);
 
@@ -168,7 +168,7 @@ public class UserController {
             log.error("Error for deleting user"
                     + "redirection to user list page");
 
-            return "user/list";
+            return "redirect:/admin/user/list";
         }
 
         userService.deleteUser(user.get());
@@ -176,6 +176,6 @@ public class UserController {
         log.info("Request GET for successful user/delete"
                 + " SUCCESS(200 OK)");
 
-        return "user/list";
+        return "redirect:/admin/user/list";
     }
 }
