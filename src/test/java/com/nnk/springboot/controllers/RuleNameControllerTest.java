@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.test.context.support.WithUserDetails;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.containsString;
@@ -21,6 +22,7 @@ public class RuleNameControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("home, should display ruleName list page")
+  @WithUserDetails("user 1")
   public void home_ShouldReturnHomePage() throws Exception {
     this.mvc.perform(get("/user/ruleName/list"))
             .andExpect(view().name("ruleName/list"))
@@ -36,6 +38,7 @@ public class RuleNameControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("AddRuleNameForm should display add ruleName  form")
+  @WithUserDetails("user 1")
   public void addRuleNameForm_ShouldDisplayAddRuleNameForm() throws Exception {
     mvc.perform(get("/user/ruleName/add"))
             .andExpect(view().name("ruleName/add"))
@@ -45,6 +48,7 @@ public class RuleNameControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("validate should return error for given blank form fields")
+  @WithUserDetails("user 1")
   public void validate_ShouldReturnError_forGivenBlankFormFields() throws Exception {
     mvc.perform(post("/user/ruleName/validate")
                     .param("name", "")
@@ -63,6 +67,7 @@ public class RuleNameControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("validate should added new ruleName for given correct form fields")
+  @WithUserDetails("user 1")
   public void validate_ShouldAddNewRuleName_forGivenCorrectFormFields() throws Exception {
     mvc.perform(post("/user/ruleName/validate")
                     .param("name", "name 6")
@@ -78,6 +83,7 @@ public class RuleNameControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("showUpdateForm should redirect to ruleName list page for given non existing ruleName id")
+  @WithUserDetails("user 1")
   public void showUpdateForm_ShouldRedirectToRuleNameListForm_ForGivenNotExistsRuleNameId() throws Exception {
     mvc.perform(get("/user/ruleName/update/100"))
             .andExpect(view().name("redirect:/user/ruleName/list"))
@@ -87,6 +93,7 @@ public class RuleNameControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("showUpdateForm should display update form for given existing ruleName id")
+  @WithUserDetails("user 1")
   public void showUpdateForm_ShouldDisplayUpdateForm_ForGivenExistRuleNameId() throws Exception {
     mvc.perform(get("/user/ruleName/update/1"))
             .andExpect(view().name("ruleName/update"))
@@ -96,6 +103,7 @@ public class RuleNameControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("updateRuleName should return error for given blank form fields")
+  @WithUserDetails("user 1")
   public void UpdateRuleName_ShouldReturnError_forGivenBlankFormFields() throws Exception {
     mvc.perform(post("/user/ruleName/update/1")
                     .param("name", "")
@@ -113,6 +121,7 @@ public class RuleNameControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("updateRuleName should update ruleName for given correct form fields")
+  @WithUserDetails("user 1")
   public void updateRuleName_ShouldUpdateRuleName_forGivenCorrectFormFields() throws Exception {
     mvc.perform(post("/user/ruleName/update/1")
                     .param("name", "name 1")
@@ -129,6 +138,7 @@ public class RuleNameControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("deleteRuleName should redirect to ruleName  list page for given not existing ruleName  id")
+  @WithUserDetails("user 1")
   public void deleteRuleName_ShouldRedirectToRuleNameList_ForGivenNotExistRuleNameId() throws Exception {
     mvc.perform(get("/user/ruleName/delete/50"))
             .andExpect(view().name("redirect:/user/ruleName/list"))
@@ -138,6 +148,7 @@ public class RuleNameControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("deleteRuleName should delete ruleName for given existing ruleName id")
+  @WithUserDetails("user 1")
   public void deleteRuleName_ShouldDeleteRuleName_ForGivenExistRuleNameId() throws Exception {
     mvc.perform(get("/user/ruleName/delete/4"))
             .andExpect(view().name("redirect:/user/ruleName/list"))

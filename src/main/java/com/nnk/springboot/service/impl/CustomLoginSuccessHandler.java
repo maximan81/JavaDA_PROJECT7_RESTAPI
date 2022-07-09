@@ -17,8 +17,16 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * CustomLoginSuccessHandler. class that implement
+ * Success login business logic
+ */
 @Configuration
 public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
     String targetUrl = determineTargetUrl(authentication);
@@ -31,6 +39,13 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
     redirectStrategy.sendRedirect(request, response, targetUrl);
   }
 
+  /**
+   * determineTargetUrl. Method that determine
+   * user or admin url redirection.
+   *
+   * @param authentication an authentication
+   * @return String url
+   */
   protected String determineTargetUrl(Authentication authentication) {
     String url = "/login?error=true";
 

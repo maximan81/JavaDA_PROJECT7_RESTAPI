@@ -4,6 +4,8 @@ package com.nnk.springboot.controllers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.test.context.support.WithUserDetails;
+
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -21,6 +23,7 @@ public class BidListControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("home, should display bid list page")
+  @WithUserDetails("user 1")
   public void home_ShouldReturnHomePage() throws Exception {
     this.mvc.perform(get("/user/bidList/list"))
             .andExpect(view().name("bidList/list"))
@@ -34,6 +37,7 @@ public class BidListControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("addBidForm should display add bid form")
+  @WithUserDetails("user 1")
   public void addBidForm_ShouldDisplayAddBidForm() throws Exception {
     mvc.perform(get("/user/bidList/add"))
             .andExpect(view().name("bidList/add"))
@@ -43,6 +47,7 @@ public class BidListControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("validate should return error for given blank form fields")
+  @WithUserDetails("user 1")
   public void validate_ShouldReturnError_forGivenBlankFormFields() throws Exception {
     mvc.perform(post("/user/bidList/validate")
                     .param("account", "")
@@ -57,6 +62,7 @@ public class BidListControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("validate should added new bid for given correct form fields")
+  @WithUserDetails("user 1")
   public void validate_ShouldAddNewBid_forGivenCorrectFormFields() throws Exception {
     mvc.perform(post("/user/bidList/validate")
                     .param("account", "account test")
@@ -69,6 +75,7 @@ public class BidListControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("showUpdateForm should redirect to bid list page for given non existing bid id")
+  @WithUserDetails("user 1")
   public void showUpdateForm_ShouldRedirectToBidListForm_ForGivenNotExistsBidId() throws Exception {
     mvc.perform(get("/user/bidList/update/1000"))
             .andExpect(view().name("redirect:/user/bidList/list"))
@@ -78,6 +85,7 @@ public class BidListControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("showUpdateForm should display update form for given existing bid id")
+  @WithUserDetails("user 1")
   public void showUpdateForm_ShouldDisplayUpdateForm_ForGivenExistBidId() throws Exception {
     mvc.perform(get("/user/bidList/update/2"))
             .andExpect(view().name("bidList/update"))
@@ -87,6 +95,7 @@ public class BidListControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("updateBid should return error for given blank form fields")
+  @WithUserDetails("user 1")
   public void UpdateBid_ShouldReturnError_forGivenBlankFormFields() throws Exception {
     mvc.perform(post("/user/bidList/update/2")
                     .param("account", "")
@@ -101,6 +110,7 @@ public class BidListControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("updateBid should update bid for given correct form fields")
+  @WithUserDetails("user 1")
   public void updateBid_ShouldUpdateBid_forGivenCorrectFormFields() throws Exception {
     mvc.perform(post("/user/bidList/update/2")
                     .param("account", "Account update")
@@ -113,6 +123,7 @@ public class BidListControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("deleteBid should redirect to bid list page for given not existing bid id")
+  @WithUserDetails("user 1")
   public void deleteBid_ShouldRedirectToBidList_ForGivenNotExistBidId() throws Exception {
     mvc.perform(get("/user/bidList/delete/2000"))
             .andExpect(view().name("redirect:/user/bidList/list"))
@@ -122,6 +133,7 @@ public class BidListControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("deleteBid should delete bid for given existing bid id")
+  @WithUserDetails("user 1")
   public void deleteBid_ShouldDeleteBid_ForGivenExistBidId() throws Exception {
     mvc.perform(get("/user/bidList/delete/5"))
             .andExpect(view().name("redirect:/user/bidList/list"))

@@ -3,6 +3,7 @@ package com.nnk.springboot.controllers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.test.context.support.WithUserDetails;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.containsString;
@@ -20,6 +21,7 @@ public class CurveControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("home, should display bid list page")
+  @WithUserDetails("user 1")
   public void home_ShouldReturnHomePage() throws Exception {
     this.mvc.perform(get("/user/curvePoint/list"))
             .andExpect(view().name("curvePoint/list"))
@@ -33,6 +35,7 @@ public class CurveControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("AddCurvePoint should display add curve point form")
+  @WithUserDetails("user 1")
   public void addCurvePointForm_ShouldDisplayAddCurvePointForm() throws Exception {
     mvc.perform(get("/user/curvePoint/add"))
             .andExpect(view().name("curvePoint/add"))
@@ -42,6 +45,7 @@ public class CurveControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("validate should return error for given blank form fields")
+  @WithUserDetails("user 1")
   public void validate_ShouldReturnError_forGivenBlankFormFields() throws Exception {
     mvc.perform(post("/user/curvePoint/validate")
                     .param("curveId", "")
@@ -57,6 +61,7 @@ public class CurveControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("validate should added new curvePoint for given correct form fields")
+  @WithUserDetails("user 1")
   public void validate_ShouldAddNewCurvePoint_forGivenCorrectFormFields() throws Exception {
     mvc.perform(post("/user/curvePoint/validate")
                     .param("curveId", "24")
@@ -69,6 +74,7 @@ public class CurveControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("showUpdateForm should redirect to curve list page for given non existing curve id")
+  @WithUserDetails("user 1")
   public void showUpdateForm_ShouldRedirectToCurvePointListForm_ForGivenNotExistsCurveId() throws Exception {
     mvc.perform(get("/user/curvePoint/update/1000"))
             .andExpect(view().name("redirect:/user/curvePoint/list"))
@@ -78,6 +84,7 @@ public class CurveControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("showUpdateForm should display update form for given existing curve id")
+  @WithUserDetails("user 1")
   public void showUpdateForm_ShouldDisplayUpdateForm_ForGivenExistCurveId() throws Exception {
     mvc.perform(get("/user/curvePoint/update/2"))
             .andExpect(view().name("curvePoint/update"))
@@ -87,6 +94,7 @@ public class CurveControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("updateCurvePoint should return error for given blank form fields")
+  @WithUserDetails("user 1")
   public void UpdateCurvePoint_ShouldReturnError_forGivenBlankFormFields() throws Exception {
     mvc.perform(post("/user/curvePoint/update/2")
                     .param("curveId", "")
@@ -101,6 +109,7 @@ public class CurveControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("updateCurvePoint should update curve for given correct form fields")
+  @WithUserDetails("user 1")
   public void updateCurvePoint_ShouldUpdateCurve_forGivenCorrectFormFields() throws Exception {
     mvc.perform(post("/user/curvePoint/update/2")
                     .param("curveId", "2")
@@ -114,6 +123,7 @@ public class CurveControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("deleteCurvePoint should redirect to bid list page for given not existing bid id")
+  @WithUserDetails("user 1")
   public void deleteCurvePoint_ShouldRedirectToCurvePointList_ForGivenNotExistCurveId() throws Exception {
     mvc.perform(get("/user/curvePoint/delete/2000"))
             .andExpect(view().name("redirect:/user/curvePoint/list"))
@@ -123,6 +133,7 @@ public class CurveControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("deleteCurvePoint should delete curve for given existing curve id")
+  @WithUserDetails("user 1")
   public void deleteCurvePoint_ShouldDeleteCurvePoint_ForGivenExistCurveId() throws Exception {
     mvc.perform(get("/user/curvePoint/delete/5"))
             .andExpect(view().name("redirect:/user/curvePoint/list"))

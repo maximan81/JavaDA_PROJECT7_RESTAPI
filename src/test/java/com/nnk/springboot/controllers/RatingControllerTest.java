@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.test.context.support.WithUserDetails;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.containsString;
@@ -21,6 +22,7 @@ public class RatingControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("home, should display rating list page")
+  @WithUserDetails("user 1")
   public void home_ShouldReturnHomePage() throws Exception {
     this.mvc.perform(get("/user/rating/list"))
             .andExpect(view().name("rating/list"))
@@ -34,6 +36,7 @@ public class RatingControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("AddRating should display add rating  form")
+  @WithUserDetails("user 1")
   public void addRatingForm_ShouldDisplayAddRatingForm() throws Exception {
     mvc.perform(get("/user/rating/add"))
             .andExpect(view().name("rating/add"))
@@ -43,6 +46,7 @@ public class RatingControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("validate should return error for given blank form fields")
+  @WithUserDetails("user 1")
   public void validate_ShouldReturnError_forGivenBlankFormFields() throws Exception {
     mvc.perform(post("/user/rating/validate")
                     .param("moodysRating", "")
@@ -58,6 +62,7 @@ public class RatingControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("validate should added new rating for given correct form fields")
+  @WithUserDetails("user 1")
   public void validate_ShouldAddNewRating_forGivenCorrectFormFields() throws Exception {
     mvc.perform(post("/user/rating/validate")
                     .param("moodysRating", "moodys rating 6")
@@ -71,6 +76,7 @@ public class RatingControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("showUpdateForm should redirect to rating list page for given non existing rating id")
+  @WithUserDetails("user 1")
   public void showUpdateForm_ShouldRedirectToRatingListForm_ForGivenNotExistsRatingId() throws Exception {
     mvc.perform(get("/user/rating/update/1000"))
             .andExpect(view().name("redirect:/user/rating/list"))
@@ -80,6 +86,7 @@ public class RatingControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("showUpdateForm should display update form for given existing rating id")
+  @WithUserDetails("user 1")
   public void showUpdateForm_ShouldDisplayUpdateForm_ForGivenExistRatingId() throws Exception {
     mvc.perform(get("/user/rating/update/2"))
             .andExpect(view().name("rating/update"))
@@ -89,6 +96,7 @@ public class RatingControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("updateRating should return error for given blank form fields")
+  @WithUserDetails("user 1")
   public void UpdateRating_ShouldReturnError_forGivenBlankFormFields() throws Exception {
     mvc.perform(post("/user/rating/update/3")
                     .param("moodysRating", "")
@@ -104,6 +112,7 @@ public class RatingControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("updateRating should update rating for given correct form fields")
+  @WithUserDetails("user 1")
   public void updateRating_ShouldUpdateRating_forGivenCorrectFormFields() throws Exception {
     mvc.perform(post("/user/rating/update/3")
                     .param("moodysRating", "moodys rating 6")
@@ -118,6 +127,7 @@ public class RatingControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("deleteRating should redirect to rating  list page for given not existing rating  id")
+  @WithUserDetails("user 1")
   public void deleteRating_ShouldRedirectToRatingList_ForGivenNotExistRatingId() throws Exception {
     mvc.perform(get("/user/rating/delete/500"))
             .andExpect(view().name("redirect:/user/rating/list"))
@@ -127,6 +137,7 @@ public class RatingControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("deleteRating should delete rating for given existing rating id")
+  @WithUserDetails("user 1")
   public void deleteRating_ShouldDeleteRating_ForGivenExistRatingId() throws Exception {
     mvc.perform(get("/user/rating/delete/4"))
             .andExpect(view().name("redirect:/user/rating/list"))

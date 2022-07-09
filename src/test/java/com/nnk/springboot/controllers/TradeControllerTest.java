@@ -3,6 +3,7 @@ package com.nnk.springboot.controllers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.test.context.support.WithUserDetails;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.containsString;
@@ -20,6 +21,7 @@ public class TradeControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("home, should display trade list page")
+  @WithUserDetails("user 1")
   public void home_ShouldReturnHomePage() throws Exception {
     this.mvc.perform(get("/user/trade/list"))
             .andExpect(view().name("trade/list"))
@@ -32,6 +34,7 @@ public class TradeControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("AddTrade should display add trade form")
+  @WithUserDetails("user 1")
   public void addTradeForm_ShouldDisplayAddTradeForm() throws Exception {
     mvc.perform(get("/user/trade/add"))
             .andExpect(view().name("trade/add"))
@@ -41,6 +44,7 @@ public class TradeControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("validate should return error for given blank form fields")
+  @WithUserDetails("user 1")
   public void validate_ShouldReturnError_forGivenBlankFormFields() throws Exception {
     mvc.perform(post("/user/trade/validate")
                     .param("account", "")
@@ -56,6 +60,7 @@ public class TradeControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("validate should added new trade for given correct form fields")
+  @WithUserDetails("user 1")
   public void validate_ShouldAddNewTrade_forGivenCorrectFormFields() throws Exception {
     mvc.perform(post("/user/trade/validate")
                     .param("account", "trade account 6")
@@ -68,6 +73,7 @@ public class TradeControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("showUpdateForm should redirect to trade list page for given non existing trade id")
+  @WithUserDetails("user 1")
   public void showUpdateForm_ShouldRedirectToTradeListForm_ForGivenNotExistsTradeId() throws Exception {
     mvc.perform(get("/user/trade/update/80"))
             .andExpect(view().name("redirect:/user/trade/list"))
@@ -77,6 +83,7 @@ public class TradeControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("showUpdateForm should display update form for given existing trade id")
+  @WithUserDetails("user 1")
   public void showUpdateForm_ShouldDisplayUpdateForm_ForGivenExistTradeId() throws Exception {
     mvc.perform(get("/user/trade/update/2"))
             .andExpect(view().name("trade/update"))
@@ -86,6 +93,7 @@ public class TradeControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("updateTrade should return error for given blank form fields")
+  @WithUserDetails("user 1")
   public void UpdateTrade_ShouldReturnError_forGivenBlankFormFields() throws Exception {
     mvc.perform(post("/user/trade/update/3")
                     .param("account", "")
@@ -100,6 +108,7 @@ public class TradeControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("updateTrade should update trade for given correct form fields")
+  @WithUserDetails("user 1")
   public void updateTrade_ShouldUpdateTrade_forGivenCorrectFormFields() throws Exception {
     mvc.perform(post("/user/trade/update/3")
                     .param("account", "account 3 update")
@@ -113,6 +122,7 @@ public class TradeControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("deleteTrade should redirect to trade  list page for given not existing trade  id")
+  @WithUserDetails("user 1")
   public void deleteTrade_ShouldRedirectToTradeList_ForGivenNotExistTradeId() throws Exception {
     mvc.perform(get("/user/trade/delete/500"))
             .andExpect(view().name("redirect:/user/trade/list"))
@@ -122,6 +132,7 @@ public class TradeControllerTest extends AbstractTest {
 
   @Test
   @DisplayName("deleteTrade should delete trade for given existing trade id")
+  @WithUserDetails("user 1")
   public void deleteTrade_ShouldDeleteTrade_ForGivenExistTradeId() throws Exception {
     mvc.perform(get("/user/trade/delete/4"))
             .andExpect(view().name("redirect:/user/trade/list"))

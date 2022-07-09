@@ -21,6 +21,7 @@ public abstract class AbstractTest {
   @BeforeEach
   protected void setUp() {
     mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+            .apply(springSecurity())
             .build();
   }
 }
