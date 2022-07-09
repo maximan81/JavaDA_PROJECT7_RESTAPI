@@ -32,11 +32,11 @@ public class CurvePoint {
 
   private Timestamp asOfDate;
 
-  @Column(columnDefinition="Decimal(10,2) default '0.00'")
+  @Column(columnDefinition = "Decimal(10,2) default '0.00'")
   @NotNull
   private Double term;
 
-  @Column(columnDefinition="Decimal(10,2) default '0.00'")
+  @Column(columnDefinition = "Decimal(10,2) default '0.00'")
   @NotNull
   private Double value;
 

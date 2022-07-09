@@ -23,158 +23,157 @@ import java.util.Optional;
 @Controller
 public class RatingController {
 
-    private static final Logger log = LoggerFactory.getLogger(CurveController.class);
-    private final RatingService ratingService;
+  private static final Logger log = LoggerFactory.getLogger(CurveController.class);
+  private final RatingService ratingService;
 
-    public RatingController(RatingService ratingService) {
-        this.ratingService = ratingService;
+  public RatingController(RatingService ratingService) {
+    this.ratingService = ratingService;
+  }
+
+  /**
+   * home. Method that display a rating home page.
+   *
+   * @param model a model
+   * @return rating/list view
+   */
+  @RequestMapping("/user/rating/list")
+  public String home(Model model) {
+    Iterable<Rating> ratings = ratingService.getRatings();
+
+    model.addAttribute("ratings", ratings);
+
+    log.info("Request GET for displaying rating/list page "
+            + " SUCCESS(200 OK)");
+
+    return "rating/list";
+  }
+
+  /**
+   * addRatingForm. Method that display an add rating form page.
+   *
+   * @param model  a model
+   * @param rating a rating
+   * @return rating/add view
+   */
+  @GetMapping("/user/rating/add")
+  public String addRatingForm(Model model, Rating rating) {
+
+    model.addAttribute("rating", rating);
+
+    log.info("Request GET for displaying rating/add page "
+            + " SUCCESS(200 OK)");
+
+    return "rating/add";
+  }
+
+  /**
+   * validate. Method that validate an add rating form
+   * and perform post request for adding new rating.
+   *
+   * @param rating a rating
+   * @param result a BindingResult
+   * @return rating/list view
+   */
+  @PostMapping("/user/rating/validate")
+  public String validate(@Valid Rating rating, BindingResult result, Model model) {
+
+    if (result.hasErrors()) {
+
+      log.error("Request POST for validation of rating/add form, {}",
+              result);
+
+      return "rating/add";
     }
 
-    /**
-     * home. Method that display a rating home page.
-     *
-     * @param model a model
-     * @return rating/list view
-     */
-    @RequestMapping("/user/rating/list")
-    public String home(Model model)
-    {
-        Iterable<Rating> ratings = ratingService.getRatings();
+    ratingService.saveRating(rating);
 
-        model.addAttribute("ratings", ratings);
+    log.info("Request POST for successful rating/add"
+            + " SUCCESS(200 OK)");
 
-        log.info("Request GET for displaying rating/list page "
-                + " SUCCESS(200 OK)");
+    return "redirect:/user/rating/list";
+  }
 
-        return "rating/list";
+  /**
+   * showUpdateForm. Method that display update rating page.
+   *
+   * @param id    a rating id
+   * @param model a model
+   * @return rating/update view
+   */
+  @GetMapping("/user/rating/update/{id}")
+  public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
+    Optional<Rating> rating = ratingService.getRating(id);
+
+    if (rating.isEmpty()) {
+
+      log.error("Error for displaying rating/update page "
+              + " redirection to rating list page");
+
+      return "redirect:/user/rating/list";
     }
 
-    /**
-     * addRatingForm. Method that display an add rating form page.
-     *
-     * @param model a model
-     * @param rating a rating
-     * @return rating/add view
-     */
-    @GetMapping("/user/rating/add")
-    public String addRatingForm(Model model, Rating rating) {
+    model.addAttribute("rating", rating.get());
 
-        model.addAttribute("rating", rating);
+    log.info("Request GET for displaying rating/update page "
+            + " SUCCESS(200 OK)");
 
-        log.info("Request GET for displaying rating/add page "
-                + " SUCCESS(200 OK)");
+    return "rating/update";
+  }
 
-        return "rating/add";
-    }
-
-    /**
-     * validate. Method that validate an add rating form
-     * and perform post request for adding new rating.
-     *
-     * @param rating a rating
-     * @param result a BindingResult
-     * @return rating/list view
-     */
-    @PostMapping("/user/rating/validate")
-    public String validate(@Valid Rating rating, BindingResult result, Model model) {
-
-        if (result.hasErrors()){
-
-            log.error("Request POST for validation of rating/add form, {}",
-                    result);
-
-            return "rating/add";
-        }
-
-        ratingService.saveRating(rating);
-
-        log.info("Request POST for successful rating/add"
-                + " SUCCESS(200 OK)");
-
-        return "redirect:/user/rating/list";
-    }
-
-    /**
-     * showUpdateForm. Method that display update rating page.
-     *
-     * @param id a rating id
-     * @param model a model
-     * @return rating/update view
-     */
-    @GetMapping("/user/rating/update/{id}")
-    public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        Optional<Rating> rating = ratingService.getRating(id);
-
-        if (rating.isEmpty()) {
-
-            log.error("Error for displaying rating/update page "
-                    + " redirection to rating list page");
-
-            return "redirect:/user/rating/list";
-        }
-
-        model.addAttribute("rating", rating.get());
-
-        log.info("Request GET for displaying rating/update page "
-                + " SUCCESS(200 OK)");
-
-        return "rating/update";
-    }
-
-    /**
-     * updateRating. Method that validate an add rating form
-     * and perform post request for updating rating.
-     *
-     * @param rating a rating
-     * @param result a BindingResult
-     * @return rating/list view
-     */
-    @PostMapping("/user/rating/update/{id}")
-    public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating,
+  /**
+   * updateRating. Method that validate an add rating form
+   * and perform post request for updating rating.
+   *
+   * @param rating a rating
+   * @param result a BindingResult
+   * @return rating/list view
+   */
+  @PostMapping("/user/rating/update/{id}")
+  public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating,
                              BindingResult result, Model model) {
 
-        if (result.hasErrors()) {
+    if (result.hasErrors()) {
 
-            log.error("Request POST for validation of rating/update form for rating "
-                            +
-                            "id: {}, errors: {}",
-                    id, result);
+      log.error("Request POST for validation of rating/update form for rating "
+                      +
+                      "id: {}, errors: {}",
+              id, result);
 
-            return "rating/update";
-        }
-
-        ratingService.saveRating(rating);
-
-        log.info("Request POST for successful rating/update"
-                + " SUCCESS(200 OK)");
-
-        return "redirect:/user/rating/list";
+      return "rating/update";
     }
 
-    /**
-     * deleteRating. Method that delete rating in database.
-     *
-     * @param id a rating id
-     * @return rating/list view
-     */
-    @GetMapping("/user/rating/delete/{id}")
-    public String deleteRating(@PathVariable("id") Integer id, Model model) {
+    ratingService.saveRating(rating);
 
-        Optional<Rating> rating = ratingService.getRating(id);
+    log.info("Request POST for successful rating/update"
+            + " SUCCESS(200 OK)");
 
-        if (rating.isEmpty()) {
+    return "redirect:/user/rating/list";
+  }
 
-            log.error("Error for deleting rating"
-                    + "redirection to rating list page");
+  /**
+   * deleteRating. Method that delete rating in database.
+   *
+   * @param id a rating id
+   * @return rating/list view
+   */
+  @GetMapping("/user/rating/delete/{id}")
+  public String deleteRating(@PathVariable("id") Integer id, Model model) {
 
-            return "redirect:/user/rating/list";
-        }
+    Optional<Rating> rating = ratingService.getRating(id);
 
-        ratingService.deleteRating(rating.get());
+    if (rating.isEmpty()) {
 
-        log.info("Request GET for successful rating/delete"
-                + " SUCCESS(200 OK)");
+      log.error("Error for deleting rating"
+              + "redirection to rating list page");
 
-        return "redirect:/user/rating/list";
+      return "redirect:/user/rating/list";
     }
+
+    ratingService.deleteRating(rating.get());
+
+    log.info("Request GET for successful rating/delete"
+            + " SUCCESS(200 OK)");
+
+    return "redirect:/user/rating/list";
+  }
 }

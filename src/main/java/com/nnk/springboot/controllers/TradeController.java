@@ -18,154 +18,153 @@ import java.util.Optional;
 @Controller
 public class TradeController {
 
-    private static final Logger log = LoggerFactory.getLogger(CurveController.class);
-    private final TradeService tradeService;
+  private static final Logger log = LoggerFactory.getLogger(CurveController.class);
+  private final TradeService tradeService;
 
-    public TradeController(TradeService tradeService) {
-        this.tradeService = tradeService;
+  public TradeController(TradeService tradeService) {
+    this.tradeService = tradeService;
+  }
+
+  /**
+   * home. Method that display a trade home page.
+   *
+   * @param model a model
+   * @return trade/list view
+   */
+  @RequestMapping("/user/trade/list")
+  public String home(Model model) {
+    Iterable<Trade> trades = tradeService.getTrades();
+
+    model.addAttribute("trades", trades);
+
+    log.info("Request GET for displaying trade/list page "
+            + " SUCCESS(200 OK)");
+
+    return "trade/list";
+  }
+
+  /**
+   * addTradeForm. Method that display an add trade form page.
+   *
+   * @param model a model
+   * @param trade a trade
+   * @return trade/add view
+   */
+  @GetMapping("/user/trade/add")
+  public String addTradeForm(Model model, Trade trade) {
+    model.addAttribute("trade", trade);
+
+    log.info("Request GET for displaying trade/add page "
+            + " SUCCESS(200 OK)");
+
+    return "trade/add";
+  }
+
+  /**
+   * validate. Method that validate an add trade form
+   * and perform post request for adding new trade.
+   *
+   * @param trade  a trade
+   * @param result a BindingResult
+   * @return trade/list view
+   */
+  @PostMapping("/user/trade/validate")
+  public String validate(@Valid Trade trade, BindingResult result, Model model) {
+    if (result.hasErrors()) {
+
+      log.error("Request POST for validation of trade/add form, {}",
+              result);
+
+      return "trade/add";
     }
 
-    /**
-     * home. Method that display a trade home page.
-     *
-     * @param model a model
-     * @return trade/list view
-     */
-    @RequestMapping("/user/trade/list")
-    public String home(Model model)
-    {
-        Iterable<Trade> trades = tradeService.getTrades();
+    tradeService.saveTrade(trade);
 
-        model.addAttribute("trades", trades);
+    log.info("Request POST for successful trade/add"
+            + " SUCCESS(200 OK)");
 
-        log.info("Request GET for displaying trade/list page "
-                + " SUCCESS(200 OK)");
+    return "redirect:/user/trade/list";
+  }
 
-        return "trade/list";
+  /**
+   * showUpdateForm. Method that display update trade page.
+   *
+   * @param id    a trade id
+   * @param model a model
+   * @return trade/update view
+   */
+  @GetMapping("/user/trade/update/{id}")
+  public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
+
+    Optional<Trade> trade = tradeService.getTrade(id);
+
+    if (trade.isEmpty()) {
+
+      log.error("Error for displaying trade/update page "
+              + " redirection to trade list page");
+
+      return "redirect:/user/trade/list";
     }
 
-    /**
-     * addTradeForm. Method that display an add trade form page.
-     *
-     * @param model a model
-     * @param trade a trade
-     * @return trade/add view
-     */
-    @GetMapping("/user/trade/add")
-    public String addTradeForm(Model model, Trade trade) {
-        model.addAttribute("trade", trade);
+    model.addAttribute("trade", trade.get());
 
-        log.info("Request GET for displaying trade/add page "
-                + " SUCCESS(200 OK)");
+    log.info("Request GET for displaying trade/update page "
+            + " SUCCESS(200 OK)");
 
-        return "trade/add";
+    return "trade/update";
+  }
+
+  /**
+   * updateTrade. Method that validate an add trade form
+   * and perform post request for updating trade.
+   *
+   * @param trade  a trade
+   * @param result a BindingResult
+   * @return trade/list view
+   */
+  @PostMapping("/user/trade/update/{id}")
+  public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade,
+                            BindingResult result, Model model) {
+    if (result.hasErrors()) {
+
+      log.error("Request POST for validation of trade/update form for trade id: {}, errors: {}",
+              id, result);
+
+      return "trade/update";
     }
 
-    /**
-     * validate. Method that validate an add trade form
-     * and perform post request for adding new trade.
-     *
-     * @param trade a trade
-     * @param result a BindingResult
-     * @return trade/list view
-     */
-    @PostMapping("/user/trade/validate")
-    public String validate(@Valid Trade trade, BindingResult result, Model model) {
-        if (result.hasErrors()){
+    tradeService.saveTrade(trade);
 
-            log.error("Request POST for validation of trade/add form, {}",
-                    result);
+    log.info("Request POST for successful trade/update"
+            + " SUCCESS(200 OK)");
 
-            return "trade/add";
-        }
+    return "redirect:/user/trade/list";
+  }
 
-        tradeService.saveTrade(trade);
+  /**
+   * deleteTrade. Method that delete trade in database.
+   *
+   * @param id a trade id
+   * @return trade/list view
+   */
+  @GetMapping("/user/trade/delete/{id}")
+  public String deleteTrade(@PathVariable("id") Integer id, Model model) {
 
-        log.info("Request POST for successful trade/add"
-                + " SUCCESS(200 OK)");
+    Optional<Trade> trade = tradeService.getTrade(id);
 
-        return "redirect:/user/trade/list";
+    if (trade.isEmpty()) {
+
+      log.error("Error for deleting trade"
+              + "redirection to trade list page");
+
+      return "redirect:/user/trade/list";
     }
 
-    /**
-     * showUpdateForm. Method that display update trade page.
-     *
-     * @param id a trade id
-     * @param model a model
-     * @return trade/update view
-     */
-    @GetMapping("/user/trade/update/{id}")
-    public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
+    tradeService.deleteTrade(trade.get());
 
-        Optional<Trade> trade = tradeService.getTrade(id);
+    log.info("Request GET for successful trade/delete"
+            + " SUCCESS(200 OK)");
 
-        if (trade.isEmpty()) {
-
-            log.error("Error for displaying trade/update page "
-                    + " redirection to trade list page");
-
-            return "redirect:/user/trade/list";
-        }
-
-        model.addAttribute("trade", trade.get());
-
-        log.info("Request GET for displaying trade/update page "
-                + " SUCCESS(200 OK)");
-
-        return "trade/update";
-    }
-
-    /**
-     * updateTrade. Method that validate an add trade form
-     * and perform post request for updating trade.
-     *
-     * @param trade a trade
-     * @param result a BindingResult
-     * @return trade/list view
-     */
-    @PostMapping("/user/trade/update/{id}")
-    public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade,
-                                   BindingResult result, Model model) {
-        if (result.hasErrors()) {
-
-            log.error("Request POST for validation of trade/update form for trade id: {}, errors: {}",
-                    id, result);
-
-            return "trade/update";
-        }
-
-        tradeService.saveTrade(trade);
-
-        log.info("Request POST for successful trade/update"
-                + " SUCCESS(200 OK)");
-
-        return "redirect:/user/trade/list";
-    }
-
-    /**
-     * deleteTrade. Method that delete trade in database.
-     *
-     * @param id a trade id
-     * @return trade/list view
-     */
-    @GetMapping("/user/trade/delete/{id}")
-    public String deleteTrade(@PathVariable("id") Integer id, Model model) {
-
-        Optional<Trade> trade = tradeService.getTrade(id);
-
-        if (trade.isEmpty()) {
-
-            log.error("Error for deleting trade"
-                    + "redirection to trade list page");
-
-            return "redirect:/user/trade/list";
-        }
-
-        tradeService.deleteTrade(trade.get());
-
-        log.info("Request GET for successful trade/delete"
-                + " SUCCESS(200 OK)");
-
-        return "redirect:/user/trade/list";
-    }
+    return "redirect:/user/trade/list";
+  }
 }

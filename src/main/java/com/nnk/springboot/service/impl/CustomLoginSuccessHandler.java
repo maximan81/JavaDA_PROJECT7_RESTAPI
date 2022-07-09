@@ -52,7 +52,7 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
     Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
     List<String> roles = new ArrayList<>();
 
-    for (GrantedAuthority authority: authorities) {
+    for (GrantedAuthority authority : authorities) {
       roles.add(authority.getAuthority());
     }
 

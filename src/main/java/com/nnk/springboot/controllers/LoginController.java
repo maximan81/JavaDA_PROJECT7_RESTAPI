@@ -21,33 +21,33 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LoginController {
 
-    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
-    @Autowired
-    private UserSecurityService userSecurityService;
+  private static final Logger log = LoggerFactory.getLogger(LoginController.class);
+  @Autowired
+  private UserSecurityService userSecurityService;
 
-    @Autowired
-    private UserRepository userRepository;
+  @Autowired
+  private UserRepository userRepository;
 
-    @GetMapping("/login")
-    public String login(Model model) {
-        return "login";
-    }
+  @GetMapping("/login")
+  public String login(Model model) {
+    return "login";
+  }
 
 
-    @GetMapping("secure/article-details")
-    public ModelAndView getAllUserArticles() {
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("users", userRepository.findAll());
-        mav.setViewName("user/list");
-        return mav;
-    }
+  @GetMapping("secure/article-details")
+  public ModelAndView getAllUserArticles() {
+    ModelAndView mav = new ModelAndView();
+    mav.addObject("users", userRepository.findAll());
+    mav.setViewName("user/list");
+    return mav;
+  }
 
-    @GetMapping("/app/error")
-    public String error(Model model) {
+  @GetMapping("/app/error")
+  public String error(Model model) {
 
-        String errorMessage= "You are not authorized for the requested data.";
-        model.addAttribute("errorMsg", errorMessage);
+    String errorMessage = "You are not authorized for the requested data.";
+    model.addAttribute("errorMsg", errorMessage);
 
-        return "403";
-    }
+    return "403";
+  }
 }

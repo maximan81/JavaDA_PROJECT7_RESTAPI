@@ -10,15 +10,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
-/*
-	@Autowired
-	private BidListRepository bidListRepository;*/
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+  /*
+      @Autowired
+      private BidListRepository bidListRepository;*/
+  public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+  }
 
-	@Override
-	public void run(String... args) throws Exception {
+  @Override
+  public void run(String... args) throws Exception {
 	/*	BidList bidList1 = new BidList("account 1", "type 1", 1d);
 		bidListRepository.save(bidList1);
 		BidList bidList2 = new BidList("account 2", "type 2", 2d);
@@ -29,5 +29,5 @@ public class Application implements CommandLineRunner {
 		bidListRepository.save(bidList4);
 		BidList bidList5 = new BidList("account 5", "type 5", 5d);
 		bidListRepository.save(bidList5);*/
-	}
+  }
 }
