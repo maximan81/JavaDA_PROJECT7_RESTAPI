@@ -1,7 +1,7 @@
 **
-# PAYMYBUDDY PROJECT
+# POSEIDON PROJECT
 
-Poseidon Application
+Financial Application
 
 
 ## Technologies
